@@ -51,13 +51,16 @@ public class Lijsten {
         return r;
     }
     
-    public static void voegKoppelToe(Kandidaat k1, Kandidaat k2) {
-        if (!kanKoppelGebruiken(k1, k2)) {
+    public static boolean voegKoppelToe(Kandidaat k1, Kandidaat k2) {
+        if (kanKoppelGebruiken(k1, k2)) {
             Koppels koppel1 = new Koppels(k1.getNaam() + "-" + k2.getNaam(), k1, k2);
             Koppels koppel2 = new Koppels(k2.getNaam() + "-" + k1.getNaam(), k2, k1);
             
             verbodenKoppels.add(koppel1);
             verbodenKoppels.add(koppel2);
+            return true;
+        }else{
+            return false;
         }
     }
     

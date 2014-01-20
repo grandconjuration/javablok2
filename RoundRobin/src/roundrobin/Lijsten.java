@@ -37,6 +37,11 @@ public class Lijsten {
         return r;
     }
     
+    public static boolean kanKoppelGebruiken(Kandidaat k1) {
+        Kandidaat k2 = new Kandidaat("");
+        return kanKoppelGebruiken(k1, k2);
+    }
+    
     public static boolean kanKoppelGebruiken(Kandidaat k1, Kandidaat k2) {
         boolean r = true;
         if(heeftKoppel(k1.getNaam() + "-" + k2.getNaam())) {
@@ -49,6 +54,11 @@ public class Lijsten {
             r = false;
         }
         return r;
+    }
+    
+    public static boolean voegKoppelToe(Kandidaat k1) {
+        Kandidaat k2 = new Kandidaat("");
+        return voegKoppelToe(k1, k2);
     }
     
     public static boolean voegKoppelToe(Kandidaat k1, Kandidaat k2) {

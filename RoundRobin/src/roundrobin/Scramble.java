@@ -17,10 +17,31 @@ public class Scramble {
         ArrayList<Kandidaat> kandidaten = Lijsten.getKandidaten();
         
         int size = kandidaten.size();
+        int todo = size;
         int done = 0;
         
         for (Kandidaat c : kandidaten) {
-            
+            if(todo < 2) {
+                if(Lijsten.kanKoppelGebruiken(c)) {
+                    if(Lijsten.voegKoppelToe(c)) {
+                        todo--;
+                        done++;
+                    }
+                }
+            }else{
+                boolean finished = false;
+                for (Kandidaat k : kandidaten) {
+                    if(!finished) {
+                        if(Lijsten.kanKoppelGebruiken(c, k)) {
+                            if(Lijsten.voegKoppelToe(c, k)) {
+                                todo--;
+                                done++;
+                                finished = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     

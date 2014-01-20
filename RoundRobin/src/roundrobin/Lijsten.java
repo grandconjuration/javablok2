@@ -13,17 +13,11 @@ import java.util.ArrayList;
  * @author jelle
  */
 public class Lijsten {
-    private ArrayList<Kandidaat> kandidaten;
-    private ArrayList<Koppels> koppels;
-    private ArrayList<Koppels> verbodenKoppels;
+    private static ArrayList<Kandidaat> kandidaten = new ArrayList<Kandidaat>();
+    private static ArrayList<Koppels> koppels = new ArrayList<Koppels>();
+    private static ArrayList<Koppels> verbodenKoppels = new ArrayList<Koppels>();
     
-    public Lijsten() {
-        kandidaten = new ArrayList<Kandidaat>();
-        koppels = new ArrayList<Koppels>();
-        verbodenKoppels = new ArrayList<Koppels>();
-    }
-    
-    public boolean heeftKoppel(String em) {
+    public static boolean heeftKoppel(String em) {
         boolean r = false;
         for (Koppels c : verbodenKoppels) {
             if (c.getNaam().equals(em)) {
@@ -33,7 +27,7 @@ public class Lijsten {
         return r;
     }
     
-    public boolean heeftKandidaat(String em) {
+    public static boolean heeftKandidaat(String em) {
         boolean r = false;
         for (Kandidaat c : kandidaten) {
             if (c.getNaam().equals(em)) {
@@ -43,7 +37,7 @@ public class Lijsten {
         return r;
     }
     
-    public boolean kanKoppelGebruiken(Kandidaat k1, Kandidaat k2) {
+    public static boolean kanKoppelGebruiken(Kandidaat k1, Kandidaat k2) {
         boolean r = true;
         if(heeftKoppel(k1.getNaam() + "-" + k2.getNaam())) {
             r = false;
@@ -57,7 +51,7 @@ public class Lijsten {
         return r;
     }
     
-    public void voegKoppelToe(Kandidaat k1, Kandidaat k2) {
+    public static void voegKoppelToe(Kandidaat k1, Kandidaat k2) {
         if (!kanKoppelGebruiken(k1, k2)) {
             Koppels koppel1 = new Koppels(k1.getNaam() + "-" + k2.getNaam(), k1, k2);
             Koppels koppel2 = new Koppels(k2.getNaam() + "-" + k1.getNaam(), k2, k1);
@@ -67,13 +61,13 @@ public class Lijsten {
         }
     }
     
-    public void voegKandidaatToe(Kandidaat k) {
+    public static void voegKandidaatToe(Kandidaat k) {
         if (!heeftKandidaat(k.getNaam())) {
             kandidaten.add(k);
         }
     }
     
-    public Koppels getKoppel(String em) {
+    public static Koppels getKoppel(String em) {
         Koppels r = null;
         for (Koppels c : koppels) {
             if (c.getNaam().equals(em)) {
@@ -83,7 +77,7 @@ public class Lijsten {
         return r;
     }
     
-    public Kandidaat getKandidaat(String em) {
+    public static Kandidaat getKandidaat(String em) {
         Kandidaat r = null;
         for (Kandidaat c : kandidaten) {
             if (c.getNaam().equals(em)) {
@@ -93,15 +87,15 @@ public class Lijsten {
         return r;
     }
     
-    public ArrayList<Koppels> getKoppels() {
+    public static ArrayList<Koppels> getKoppels() {
         return koppels;
     }
     
-    public ArrayList<Kandidaat> getKandidaten() {
+    public static ArrayList<Kandidaat> getKandidaten() {
         return kandidaten;
     }
     
-    public void resetKoppels() {
+    public static void resetKoppels() {
         koppels = new ArrayList<Koppels>();
     }
 }

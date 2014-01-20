@@ -33,6 +33,16 @@ public class Lijsten {
         return r;
     }
     
+    public boolean heeftKandidaat(String em) {
+        boolean r = false;
+        for (Kandidaat c : kandidaten) {
+            if (c.getNaam().equals(em)) {
+                r = true;
+            }
+        }
+        return r;
+    }
+    
     public boolean kanKoppelGebruiken(Kandidaat k1, Kandidaat k2) {
         boolean r = true;
         if(heeftKoppel(k1.getNaam() + "-" + k2.getNaam())) {
@@ -55,6 +65,32 @@ public class Lijsten {
             verbodenKoppels.add(koppel1);
             verbodenKoppels.add(koppel2);
         }
+    }
+    
+    public void voegKandidaadToe(Kandidaat k) {
+        if (!heeftKandidaat(k.getNaam())) {
+            kandidaten.add(k);
+        }
+    }
+    
+    public Koppels getKoppel(String em) {
+        Koppels r = null;
+        for (Koppels c : koppels) {
+            if (c.getNaam().equals(em)) {
+                r = c;
+            }
+        }
+        return r;
+    }
+    
+    public Kandidaat getKandidaat(String em) {
+        Kandidaat r = null;
+        for (Kandidaat c : kandidaten) {
+            if (c.getNaam().equals(em)) {
+                r = c;
+            }
+        }
+        return r;
     }
     
     public void resetKoppels() {

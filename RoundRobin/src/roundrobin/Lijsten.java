@@ -67,7 +67,7 @@ public class Lijsten {
         }
     }
     
-    public void voegKandidaadToe(Kandidaat k) {
+    public void voegKandidaatToe(Kandidaat k) {
         if (!heeftKandidaat(k.getNaam())) {
             kandidaten.add(k);
         }

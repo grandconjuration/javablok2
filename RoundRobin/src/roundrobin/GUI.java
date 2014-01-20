@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
 /**
@@ -23,31 +23,58 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
  */
 public class GUI extends JFrame implements ActionListener {
 
-  //  private JPanel jp;
-    private JTextArea klassenLijst;
-    private JScrollPane scrollPane;
-    private JButton leesIn;
-    private JButton produceerKoppels;
+    //  private JPanel jp;
+    private JTextArea klassenLijst, test;
+    private JScrollPane scrollPane, scrollPane2;
+    private JButton leesIn, produceerKoppels, copy, checkKoppels;
+    private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5;
     private Lijsten lijsten = new Lijsten();
     //   private ArrayList<String> namenArray = new ArrayList<String>();
 
     public GUI() {
 
         // LAYOUT && JTextArea
-        setLayout(new FlowLayout());
-        klassenLijst = new JTextArea(15, 10);
-        add(klassenLijst);
+        controlPanel = new JPanel();
+        add(controlPanel);
+        controlPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
 
-        scrollPane = new JScrollPane(klassenLijst, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_NEVER);
-        add(scrollPane);
-        //  jp = new JPanel();
-        //   jp.setPreferredSize(new Dimension(450, 610));
-        //   jp.setBackground(new Color(0, 128, 255));
-        //  add(jp);
+        panel_1 = new JPanel(new FlowLayout());
+        panel_2 = new JPanel(new FlowLayout());
+        panel_3 = new JPanel(new FlowLayout());
+        panel_4 = new JPanel(new FlowLayout());
+        panel_5 = new JPanel(new FlowLayout());
+        
+        klassenLijst = new JTextArea(15, 10);
+        panel_1.add(klassenLijst);
+
+        scrollPane = new JScrollPane(klassenLijst, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panel_1.add(scrollPane);
 
         leesIn = new JButton("Lees in");
-        add(leesIn);
+        panel_2.add(leesIn);
         leesIn.addActionListener(this);
+        
+        produceerKoppels = new JButton("Produceer koppels");
+        panel_3.add(produceerKoppels);
+        
+        checkKoppels = new JButton("Check koppels");
+        panel_3.add(checkKoppels);
+        
+        test = new JTextArea(15, 10);
+        panel_4.add(test);
+        scrollPane2 = new JScrollPane(test, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panel_4.add(scrollPane2);
+        
+        copy = new JButton("Kopieer output");
+        panel_5.add(copy);
+
+        controlPanel.add(panel_1, c);
+        controlPanel.add(panel_2, c);
+        controlPanel.add(panel_3, c);
+        controlPanel.add(panel_4, c);
+        controlPanel.add(panel_5, c);
 
         setSize(550, 850);
         setTitle("Round Robin");

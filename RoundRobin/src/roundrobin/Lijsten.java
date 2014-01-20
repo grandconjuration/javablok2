@@ -93,6 +93,14 @@ public class Lijsten {
         return r;
     }
     
+    public ArrayList<Koppels> getKoppels() {
+        return koppels;
+    }
+    
+    public ArrayList<Kandidaat> getKandidaten() {
+        return kandidaten;
+    }
+    
     public void resetKoppels() {
         koppels = new ArrayList<Koppels>();
     }

@@ -10,7 +10,7 @@ import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -18,6 +18,8 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 import java.awt.datatransfer.*;
 import java.awt.Toolkit;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 /**
  *
@@ -28,10 +30,10 @@ public class GUI extends JFrame implements ActionListener {
     //  private JPanel jp;
     private JTextArea input, output;
     private JScrollPane scrollPane, scrollPane2;
-    private JButton leesIn, produceerKoppels, copy, checkKoppels;
-    private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5;
+    private JButton leesIn, produceerKoppels, copy, checkKoppels, selectFile;
+    private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5, panel_6;
     private Lijsten lijsten = new Lijsten();
-   
+
     public GUI() {
 
         controlPanel = new JPanel();
@@ -45,31 +47,36 @@ public class GUI extends JFrame implements ActionListener {
         panel_3 = new JPanel(new FlowLayout());
         panel_4 = new JPanel(new FlowLayout());
         panel_5 = new JPanel(new FlowLayout());
+        panel_6 = new JPanel(new FlowLayout());
+
+        selectFile = new JButton("Blader naar tekstbestand");
+        selectFile.addActionListener(this);
+        panel_1.add(selectFile);
 
         input = new JTextArea(15, 10);
-        panel_1.add(input);
+        panel_2.add(input);
 
         scrollPane = new JScrollPane(input, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panel_1.add(scrollPane);
+        panel_2.add(scrollPane);
 
         leesIn = new JButton("Lees in");
-        panel_2.add(leesIn);
+        panel_3.add(leesIn);
         leesIn.addActionListener(this);
 
         produceerKoppels = new JButton("Produceer koppels");
-        panel_3.add(produceerKoppels);
+        panel_4.add(produceerKoppels);
 
         checkKoppels = new JButton("Check koppels");
-        panel_3.add(checkKoppels);
+        panel_4.add(checkKoppels);
 
         output = new JTextArea(15, 10);
-        panel_4.add(output);
+        panel_5.add(output);
         scrollPane2 = new JScrollPane(output, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panel_4.add(scrollPane2);
+        panel_5.add(scrollPane2);
 
         copy = new JButton("Kopieer output");
         copy.addActionListener(this);
-        panel_5.add(copy);
+        panel_6.add(copy);
 
         controlPanel.add(panel_1, c);
         controlPanel.add(panel_2, c);
@@ -85,19 +92,80 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
+    private String readFile(File file) {
+        StringBuilder stringBuffer = new StringBuilder();
+        BufferedReader bufferedReader = null;
+
+        try {
+
+            bufferedReader = new BufferedReader(new FileReader(file));
+
+            String text;
+            while ((text = bufferedReader.readLine()) != null) {
+                stringBuffer.append(text);
+            }
+
+        } catch (FileNotFoundException ex) {
+         //   Logger.getLogger(JavaFX_OpenFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+       //     Logger.getLogger(JavaFX_OpenFile.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException ex) {
+         //       Logger.getLogger(JavaFX_OpenFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return stringBuffer.toString();
+    }
+
     public static void main(String[] args) {
 
         GUI RoundRobin = new GUI();
     }
 
     public void actionPerformed(ActionEvent e) {
-        
-        if(e.getSource() == copy)
-        {
-        String myCopy = output.getText();
-        StringSelection stringSelection = new StringSelection(myCopy);
-        Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clpbrd.setContents(stringSelection, null);            
+
+        if (e.getSource() == selectFile) {
+
+            JFileChooser fc = new JFileChooser();
+            int returnValue = fc.showOpenDialog(this);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+                File file = fc.getSelectedFile();
+
+                if (file.exists() && file.isFile()) {
+
+                    FileReader fr = null;
+                    BufferedReader br =  null;
+
+                    try {
+                        fr = new FileReader(file);
+                        br = new BufferedReader(fr);
+                        
+                        
+                        System.out.println(br.readLine());
+
+                        br.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println(ex.getMessage());
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        if (e.getSource() == copy) {
+            String myCopy = output.getText();
+            StringSelection stringSelection = new StringSelection(myCopy);
+            Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clpbrd.setContents(stringSelection, null);
         }
 
         if (e.getSource() == leesIn) {

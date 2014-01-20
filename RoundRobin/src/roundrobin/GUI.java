@@ -23,16 +23,17 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
  */
 public class GUI extends JFrame implements ActionListener {
 
-    private JPanel jp;
-
+  //  private JPanel jp;
     private JTextArea klassenLijst;
     private JScrollPane scrollPane;
     private JButton leesIn;
-    private ArrayList<String> namenArray = new ArrayList<String>();
+    private JButton produceerKoppels;
+    private Lijsten lijsten = new Lijsten();
+    //   private ArrayList<String> namenArray = new ArrayList<String>();
 
     public GUI() {
 
-        // LAYOUT && JPANEL
+        // LAYOUT && JTextArea
         setLayout(new FlowLayout());
         klassenLijst = new JTextArea(15, 10);
         add(klassenLijst);
@@ -66,7 +67,6 @@ public class GUI extends JFrame implements ActionListener {
         if (e.getSource() == leesIn) {
 
             BufferedReader br = new BufferedReader(new StringReader(klassenLijst.getText()));
-          //  System.out.println(klassenLijst.getText());
 
             try {
 
@@ -76,9 +76,9 @@ public class GUI extends JFrame implements ActionListener {
                     if (line == null) {
                         break;
                     }
-                       System.out.println(line);
-                       namenArray.add(line);
-                    System.out.println(namenArray);
+                    System.out.println(line);
+                    Kandidaat kandidaat = new Kandidaat(line);
+                    lijsten.voegKandidaatToe(kandidaat);
 
                 }
                 br.close();
@@ -87,11 +87,9 @@ public class GUI extends JFrame implements ActionListener {
                 System.out.println(ex.getMessage());
 
             }
-            
 
         }
 
     }
 
 }
-

@@ -23,8 +23,38 @@ public class Lijsten {
         verbodenKoppels = new ArrayList<Koppels>();
     }
     
-    public boolean kanKoppelGebruiken(Koppels k1, Koppels k2) {
-        return false;
+    public boolean heeftKoppel(String em) {
+        boolean r = false;
+        for (Koppels c : verbodenKoppels) {
+            if (c.getNaam().equals(em)) {
+                r = true;
+            }
+        }
+        return r;
+    }
+    
+    public boolean kanKoppelGebruiken(Kandidaat k1, Kandidaat k2) {
+        boolean r = true;
+        if(heeftKoppel(k1.getNaam() + "-" + k2.getNaam())) {
+            r = false;
+        }
+        if(heeftKoppel(k2.getNaam() + "-" + k1.getNaam())) {
+            r = false;
+        }
+        if(k1.getNaam().equals(k2.getNaam())) {
+            r = false;
+        }
+        return r;
+    }
+    
+    public void voegKoppelToe(Kandidaat k1, Kandidaat k2) {
+        if (!kanKoppelGebruiken(k1, k2)) {
+            Koppels koppel1 = new Koppels(k1.getNaam() + "-" + k2.getNaam(), k1, k2);
+            Koppels koppel2 = new Koppels(k2.getNaam() + "-" + k1.getNaam(), k2, k1);
+            
+            verbodenKoppels.add(koppel1);
+            verbodenKoppels.add(koppel2);
+        }
     }
     
     public void resetKoppels() {

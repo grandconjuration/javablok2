@@ -12,10 +12,10 @@ package roundrobin;
  */
 public class Koppels {
     private String naam;
-    private Koppels kandidaat1;
-    private Koppels kandidaat2;
+    private Kandidaat kandidaat1;
+    private Kandidaat kandidaat2;
     
-    public Koppels(String nm, Koppels k1, Koppels k2) {
+    public Koppels(String nm, Kandidaat k1, Kandidaat k2) {
         naam = nm;
         kandidaat1 = k1;
         kandidaat2 = k2;
@@ -25,11 +25,11 @@ public class Koppels {
         return naam;
     }
     
-    public Koppels getKandidaat1() {
+    public Kandidaat getKandidaat1() {
         return kandidaat1;
     }
     
-    public Koppels getKandidaat2() {
+    public Kandidaat getKandidaat2() {
         return kandidaat2;
     }
 }

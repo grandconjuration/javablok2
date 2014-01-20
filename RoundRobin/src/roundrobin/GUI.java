@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
+import java.awt.datatransfer.*;
+import java.awt.Toolkit;
 
 /**
  *
@@ -24,16 +26,14 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 public class GUI extends JFrame implements ActionListener {
 
     //  private JPanel jp;
-    private JTextArea klassenLijst, test;
+    private JTextArea input, output;
     private JScrollPane scrollPane, scrollPane2;
     private JButton leesIn, produceerKoppels, copy, checkKoppels;
     private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5;
     private Lijsten lijsten = new Lijsten();
-    //   private ArrayList<String> namenArray = new ArrayList<String>();
-
+   
     public GUI() {
 
-        // LAYOUT && JTextArea
         controlPanel = new JPanel();
         add(controlPanel);
         controlPanel.setLayout(new GridBagLayout());
@@ -45,29 +45,30 @@ public class GUI extends JFrame implements ActionListener {
         panel_3 = new JPanel(new FlowLayout());
         panel_4 = new JPanel(new FlowLayout());
         panel_5 = new JPanel(new FlowLayout());
-        
-        klassenLijst = new JTextArea(15, 10);
-        panel_1.add(klassenLijst);
 
-        scrollPane = new JScrollPane(klassenLijst, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        input = new JTextArea(15, 10);
+        panel_1.add(input);
+
+        scrollPane = new JScrollPane(input, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panel_1.add(scrollPane);
 
         leesIn = new JButton("Lees in");
         panel_2.add(leesIn);
         leesIn.addActionListener(this);
-        
+
         produceerKoppels = new JButton("Produceer koppels");
         panel_3.add(produceerKoppels);
-        
+
         checkKoppels = new JButton("Check koppels");
         panel_3.add(checkKoppels);
-        
-        test = new JTextArea(15, 10);
-        panel_4.add(test);
-        scrollPane2 = new JScrollPane(test, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        output = new JTextArea(15, 10);
+        panel_4.add(output);
+        scrollPane2 = new JScrollPane(output, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panel_4.add(scrollPane2);
-        
+
         copy = new JButton("Kopieer output");
+        copy.addActionListener(this);
         panel_5.add(copy);
 
         controlPanel.add(panel_1, c);
@@ -90,10 +91,18 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        
+        if(e.getSource() == copy)
+        {
+        String myCopy = output.getText();
+        StringSelection stringSelection = new StringSelection(myCopy);
+        Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clpbrd.setContents(stringSelection, null);            
+        }
 
         if (e.getSource() == leesIn) {
 
-            BufferedReader br = new BufferedReader(new StringReader(klassenLijst.getText()));
+            BufferedReader br = new BufferedReader(new StringReader(input.getText()));
 
             try {
 

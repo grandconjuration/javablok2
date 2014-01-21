@@ -44,7 +44,6 @@ public class GUI extends JFrame implements ActionListener {
     ArrayList<JPanel> newPanels = new ArrayList<>();
     ArrayList<JLabel> newLabels = new ArrayList<>();
     ArrayList<JProgressBar> newBars = new ArrayList<>();
-    ArrayList<Disk> disks = new ArrayList<>();
     private boolean processed = false;
 
     public GUI() {
@@ -103,7 +102,8 @@ public class GUI extends JFrame implements ActionListener {
         newPanels = new ArrayList<>();
         newLabels = new ArrayList<>();
         newBars = new ArrayList<>();
-        disks = new ArrayList<>();
+        Parser.resetDisks();
+        
     }
 
     @Override
@@ -116,14 +116,16 @@ public class GUI extends JFrame implements ActionListener {
             output_panel.repaint();
             processed = false;
             newArrayLists();
-            System.out.println(disks);
+      //      controlPanel.revalidate();
+    //        controlPanel.repaint();
+      
 
         }
 
         if (e.getSource() == process) {
             if (!processed) {
                 boolean isParsed = Parser.parseOutput(input.getText());
-                disks = Parser.getDisks();
+                ArrayList<Disk> disks = Parser.getDisks();
 
                 if (isParsed) {
                     GridBagConstraints a = new GridBagConstraints();

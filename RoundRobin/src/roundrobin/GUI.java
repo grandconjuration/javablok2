@@ -100,7 +100,6 @@ public class GUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
         if(e.getSource() == checkKoppels) {
-            System.out.println("test");
             boolean bool = Scramble.checkKoppels();
             checkKoppelsLabel.setText("checkKoppels() returns: " + bool);
             

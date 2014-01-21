@@ -69,7 +69,7 @@ public class GUI extends JFrame implements ActionListener {
         panel_4.add(checkKoppels);
         checkKoppels.addActionListener(this);
         
-        checkKoppelsLabel = new JLabel("");
+        checkKoppelsLabel = new JLabel("checkKoppels() returns: void");
         panel_5.add(checkKoppelsLabel);
 
         output = new JTextArea(15, 30);

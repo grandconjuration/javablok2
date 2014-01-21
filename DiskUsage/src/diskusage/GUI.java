@@ -5,6 +5,7 @@
  */
 package diskusage;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -17,6 +18,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,12 +35,10 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
  */
 public class GUI extends JFrame implements ActionListener {
 
-    private JPanel controlPanel, panel_1, panel_2;
+    private JPanel controlPanel, panel_1, panel_2, output_panel;
     private JTextArea input;
     private JButton process, loadExample;
     private JScrollPane scrollPane;
-//    private JProgressBar progressBar;
- //   private JLabel barLabel;
     private GridBagConstraints c;
     private String defaultExample;
     ArrayList<JPanel> newPanels = new ArrayList<JPanel>();
@@ -52,10 +52,10 @@ public class GUI extends JFrame implements ActionListener {
         controlPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
-
+        
         panel_1 = new JPanel(new FlowLayout());
         panel_2 = new JPanel(new FlowLayout());
-        //       panel_3 = new JPanel(new FlowLayout());
+        output_panel = new JPanel(new GridBagLayout());
 
         input = new JTextArea(10, 40);
         panel_1.add(input);
@@ -80,9 +80,10 @@ public class GUI extends JFrame implements ActionListener {
 
         controlPanel.add(panel_1, c);
         controlPanel.add(panel_2, c);
-     //          controlPanel.add(panel_3, c);
+        controlPanel.add(output_panel, c);
+        //          controlPanel.add(panel_3, c);
 
-        setSize(550, 850);
+        setSize(550, 900);
         setTitle("Disk Usage");
         setVisible(true);
         setLocationRelativeTo(null);
@@ -95,7 +96,7 @@ public class GUI extends JFrame implements ActionListener {
 
         if (e.getSource() == process) {
 
-            int times = 3;
+            int times = 5;
 
             for (int i = 0; i < times; i++) {
 
@@ -107,15 +108,19 @@ public class GUI extends JFrame implements ActionListener {
                 newBars.get(i).setValue(50);
                 newBars.get(i).setStringPainted(true);
      //           Dimension prefSize = newBars.get(i).getPreferredSize();
-       //         prefSize.width = 400;
-    //            newBars.get(i).setPreferredSize(prefSize);
+                //         prefSize.width = 400;
+                //            newBars.get(i).setPreferredSize(prefSize);
                 newPanels.get(i).add(newBars.get(i));
 
-                controlPanel.add(newPanels.get(i), c);
+                GridBagConstraints d = new GridBagConstraints();
+                d.gridwidth = GridBagConstraints.REMAINDER;
+                output_panel.add(newPanels.get(i), d);
+                output_panel.validate();
 
             }
             controlPanel.validate();
             controlPanel.repaint();
+
         }
 
         if (e.getSource() == loadExample) {

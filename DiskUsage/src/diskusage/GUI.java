@@ -14,10 +14,12 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -31,13 +33,17 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
  */
 public class GUI extends JFrame implements ActionListener {
 
-    private JPanel controlPanel, panel_1, panel_2, panel_3;
+    private JPanel controlPanel, panel_1, panel_2;
     private JTextArea input;
     private JButton process, loadExample;
     private JScrollPane scrollPane;
-    private JProgressBar progressBar;
+//    private JProgressBar progressBar;
+ //   private JLabel barLabel;
     private GridBagConstraints c;
     private String defaultExample;
+    ArrayList<JPanel> newPanels = new ArrayList<JPanel>();
+    ArrayList<JLabel> newLabels = new ArrayList<JLabel>();
+    ArrayList<JProgressBar> newBars = new ArrayList<JProgressBar>();
 
     public GUI() {
 
@@ -49,7 +55,7 @@ public class GUI extends JFrame implements ActionListener {
 
         panel_1 = new JPanel(new FlowLayout());
         panel_2 = new JPanel(new FlowLayout());
-        panel_3 = new JPanel(new FlowLayout());
+        //       panel_3 = new JPanel(new FlowLayout());
 
         input = new JTextArea(10, 40);
         panel_1.add(input);
@@ -65,14 +71,6 @@ public class GUI extends JFrame implements ActionListener {
         panel_2.add(process);
         process.addActionListener(this);
 
-        progressBar = new JProgressBar(0, 100);
-        progressBar.setValue(50);
-        progressBar.setStringPainted(true);
-        Dimension prefSize = progressBar.getPreferredSize();
-        prefSize.width = 300;
-        progressBar.setPreferredSize(prefSize);
-        panel_3.add(progressBar);
-
         defaultExample = "Filesystem 1K-blocks Used Available Use% Mounted on\n"
                 + "/dev/sda6 29640780 4320704 23814388 16% /\n"
                 + "udev 1536756 4 1536752 1% /dev\n"
@@ -82,7 +80,7 @@ public class GUI extends JFrame implements ActionListener {
 
         controlPanel.add(panel_1, c);
         controlPanel.add(panel_2, c);
-        controlPanel.add(panel_3, c);
+     //          controlPanel.add(panel_3, c);
 
         setSize(550, 850);
         setTitle("Disk Usage");
@@ -97,12 +95,33 @@ public class GUI extends JFrame implements ActionListener {
 
         if (e.getSource() == process) {
 
+            int times = 3;
+
+            for (int i = 0; i < times; i++) {
+
+                newPanels.add(new JPanel(new FlowLayout()));
+                newLabels.add(new JLabel("" + i + ""));
+                newBars.add(new JProgressBar(0, 100));
+
+                newPanels.get(i).add(newLabels.get(i));
+                newBars.get(i).setValue(50);
+                newBars.get(i).setStringPainted(true);
+     //           Dimension prefSize = newBars.get(i).getPreferredSize();
+       //         prefSize.width = 400;
+    //            newBars.get(i).setPreferredSize(prefSize);
+                newPanels.get(i).add(newBars.get(i));
+
+                controlPanel.add(newPanels.get(i), c);
+
+            }
+            controlPanel.validate();
+            controlPanel.repaint();
         }
 
         if (e.getSource() == loadExample) {
-            
+
             input.setText(defaultExample);
-            
+
         }
 
     }

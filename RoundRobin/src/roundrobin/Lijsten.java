@@ -28,6 +28,16 @@ public class Lijsten {
         return r;
     }
     
+    public static boolean isGebruikteKandidaat(String em) {
+        boolean r = false;
+        for (Kandidaat c : gebruikteKandidaten) {
+            if (c.getNaam().equals(em)) {
+                r = true;
+            }
+        }
+        return r;
+    }
+    
     public static boolean heeftKandidaat(String em) {
         boolean r = false;
         for (Kandidaat c : kandidaten) {
@@ -45,6 +55,14 @@ public class Lijsten {
     
     public static boolean kanKoppelGebruiken(Kandidaat k1, Kandidaat k2) {
         boolean r = true;
+        
+        if(isGebruikteKandidaat(k1.getNaam())) {
+            r = false;
+        }
+        if(isGebruikteKandidaat(k2.getNaam())) {
+            r = false;
+        }
+        
         if(heeftKoppel(k1.getNaam() + "-" + k2.getNaam())) {
             r = false;
         }

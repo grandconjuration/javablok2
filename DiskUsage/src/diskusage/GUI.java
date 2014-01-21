@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
 /**
  *
@@ -21,8 +25,10 @@ import javax.swing.JPanel;
  */
 public class GUI extends JFrame implements ActionListener {
     
-    private JPanel controlPanel, panel_1;
-    private JButton process;
+    private JPanel controlPanel, panel_1, panel_2;
+    private JTextArea input;
+    private JButton process, loadExample;
+    private JScrollPane scrollPane;
     
     
     public GUI() {
@@ -34,11 +40,21 @@ public class GUI extends JFrame implements ActionListener {
         c.gridwidth = GridBagConstraints.REMAINDER;
         
         panel_1 = new JPanel(new FlowLayout());
+        panel_2 = new JPanel(new FlowLayout());
         
+        input = new JTextArea(10, 40);
+        panel_1.add(input);
+        
+        scrollPane = new JScrollPane(input, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panel_1.add(scrollPane);        
+        
+        loadExample = new JButton("Load default example");
+        panel_2.add(loadExample);
         process = new JButton("Process");
-        panel_1.add(process);
+        panel_2.add(process);
         
         controlPanel.add(panel_1, c);
+        controlPanel.add(panel_2, c);
         
         setSize(550, 850);
         setTitle("Disk Usage");

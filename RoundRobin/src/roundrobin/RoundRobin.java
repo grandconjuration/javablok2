@@ -16,7 +16,9 @@ public class RoundRobin {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // start GUI
+        GUI gui = new GUI();
+        
     }
     
 }

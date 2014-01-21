@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package roundrobin;
 
 import java.awt.*;
@@ -27,7 +23,6 @@ import java.io.FileReader;
  */
 public class GUI extends JFrame implements ActionListener {
 
-    //  private JPanel jp;
     private JTextArea input, output;
     private JScrollPane scrollPane, scrollPane2;
     private JButton leesIn, produceerKoppels, copy, checkKoppels, selectFile;
@@ -92,10 +87,6 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
-    public static void main(String[] args) {
-
-        GUI RoundRobin = new GUI();
-    }
 
     public void actionPerformed(ActionEvent e) {
 
@@ -111,23 +102,23 @@ public class GUI extends JFrame implements ActionListener {
                 if (file.exists() && file.isFile()) {
 
                     FileReader fr = null;
-                    BufferedReader br =  null;
+                    BufferedReader br = null;
 
                     try {
                         fr = new FileReader(file);
                         br = new BufferedReader(fr);
-                        
+
                         StringBuilder sb = new StringBuilder();
                         String line = br.readLine();
-                        
-                        while(line != null) {
+
+                        while (line != null) {
                             sb.append(line);
                             sb.append("\n");
                             line = br.readLine();
                         }
-                        
+
                         input.setText(sb.toString());
-              //          System.out.println(numOfLines);
+                        //          System.out.println(numOfLines);
 
                         br.close();
                     } catch (IOException ex) {

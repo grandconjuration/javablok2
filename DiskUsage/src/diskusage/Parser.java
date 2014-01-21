@@ -46,7 +46,8 @@ public class Parser {
                 while (sc.hasNext()) {
                     i++;
                     String s = sc.next();
-                    if(i == 1 && s == "Filesystem") {
+                    
+                    if(i == 1 && s.equals("Filesystem")) {
                         doLine = false;
                     }
                     
@@ -54,7 +55,8 @@ public class Parser {
                         if(i == 1) {
                             naam = s;
                         }else if(i == 5) {
-                            percentUsed = Integer.parseInt(s);
+                            String percent = s.replaceAll("%", "");
+                            percentUsed = Integer.parseInt(percent);
                         }
                     }
                 }

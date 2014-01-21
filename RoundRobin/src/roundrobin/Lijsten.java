@@ -14,12 +14,12 @@ import java.util.ArrayList;
  */
 public class Lijsten {
     private static ArrayList<Kandidaat> kandidaten = new ArrayList<Kandidaat>();
-    private static ArrayList<Koppels> koppels = new ArrayList<Koppels>();
-    private static ArrayList<Koppels> verbodenKoppels = new ArrayList<Koppels>();
+    private static ArrayList<Koppel> koppels = new ArrayList<Koppel>();
+    private static ArrayList<Koppel> verbodenKoppels = new ArrayList<Koppel>();
     
     public static boolean heeftKoppel(String em) {
         boolean r = false;
-        for (Koppels c : verbodenKoppels) {
+        for (Koppel c : verbodenKoppels) {
             if (c.getNaam().equals(em)) {
                 r = true;
             }
@@ -63,8 +63,8 @@ public class Lijsten {
     
     public static boolean voegKoppelToe(Kandidaat k1, Kandidaat k2) {
         if (kanKoppelGebruiken(k1, k2)) {
-            Koppels koppel1 = new Koppels(k1.getNaam() + "-" + k2.getNaam(), k1, k2);
-            Koppels koppel2 = new Koppels(k2.getNaam() + "-" + k1.getNaam(), k2, k1);
+            Koppel koppel1 = new Koppel(k1.getNaam() + "-" + k2.getNaam(), k1, k2);
+            Koppel koppel2 = new Koppel(k2.getNaam() + "-" + k1.getNaam(), k2, k1);
             
             verbodenKoppels.add(koppel1);
             verbodenKoppels.add(koppel2);
@@ -80,9 +80,9 @@ public class Lijsten {
         }
     }
     
-    public static Koppels getKoppel(String em) {
-        Koppels r = null;
-        for (Koppels c : koppels) {
+    public static Koppel getKoppel(String em) {
+        Koppel r = null;
+        for (Koppel c : koppels) {
             if (c.getNaam().equals(em)) {
                 r = c;
             }
@@ -100,7 +100,7 @@ public class Lijsten {
         return r;
     }
     
-    public static ArrayList<Koppels> getKoppels() {
+    public static ArrayList<Koppel> getKoppels() {
         return koppels;
     }
     
@@ -109,6 +109,6 @@ public class Lijsten {
     }
     
     public static void resetKoppels() {
-        koppels = new ArrayList<Koppels>();
+        koppels = new ArrayList<Koppel>();
     }
 }

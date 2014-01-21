@@ -1,4 +1,3 @@
-
 package roundrobin;
 
 import java.awt.*;
@@ -16,6 +15,8 @@ import java.awt.datatransfer.*;
 import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -27,7 +28,6 @@ public class GUI extends JFrame implements ActionListener {
     private JScrollPane scrollPane, scrollPane2;
     private JButton leesIn, produceerKoppels, copy, checkKoppels, selectFile;
     private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5, panel_6;
-    private Lijsten lijsten = new Lijsten();
 
     public GUI() {
 
@@ -60,6 +60,7 @@ public class GUI extends JFrame implements ActionListener {
 
         produceerKoppels = new JButton("Produceer koppels");
         panel_4.add(produceerKoppels);
+        produceerKoppels.addActionListener(this);
 
         checkKoppels = new JButton("Check koppels");
         panel_4.add(checkKoppels);
@@ -87,8 +88,20 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
-
     public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == produceerKoppels) {
+            
+            Scramble.runGenerator();
+            ArrayList<Koppel> koppel = Lijsten.getKoppels();
+            System.out.println(Lijsten.getKoppels());
+           /* for(Koppel kop : koppel) {
+                koppel.getKandidaat1();
+            }*/
+                
+            System.out.println(koppel.get(1).toString());
+
+        }
 
         if (e.getSource() == selectFile) {
 
@@ -152,9 +165,9 @@ public class GUI extends JFrame implements ActionListener {
                     if (line == null) {
                         break;
                     }
-                    System.out.println(line);
+                    //   System.out.println(line);
                     Kandidaat kandidaat = new Kandidaat(line);
-                    lijsten.voegKandidaatToe(kandidaat);
+                    Lijsten.voegKandidaatToe(kandidaat);
 
                 }
                 br.close();

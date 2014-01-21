@@ -47,20 +47,20 @@ public class Scramble {
     
     public static boolean checkKoppels() {
         boolean r = true;
-        ArrayList<Koppels> koppels = Lijsten.getKoppels();
-        ArrayList<Koppels> verbodenKoppels = new ArrayList<Koppels>();
+        ArrayList<Koppel> koppels = Lijsten.getKoppels();
+        ArrayList<Koppel> verbodenKoppels = new ArrayList<Koppel>();
         
-        for (Koppels c : koppels) {
+        for (Koppel c : koppels) {
             boolean collision = false;
             
             if(c.getKandidaat1().getNaam().equals(c.getKandidaat2().getNaam())) {
                 r = false;
             }
             
-            Koppels h1 = new Koppels(c.getKandidaat1().getNaam() + "-" + c.getKandidaat2().getNaam(), c.getKandidaat1(), c.getKandidaat2());
-            Koppels h2 = new Koppels(c.getKandidaat2().getNaam() + "-" + c.getKandidaat1().getNaam(), c.getKandidaat2(), c.getKandidaat1());
+            Koppel h1 = new Koppel(c.getKandidaat1().getNaam() + "-" + c.getKandidaat2().getNaam(), c.getKandidaat1(), c.getKandidaat2());
+            Koppel h2 = new Koppel(c.getKandidaat2().getNaam() + "-" + c.getKandidaat1().getNaam(), c.getKandidaat2(), c.getKandidaat1());
             
-            for (Koppels v : verbodenKoppels) {
+            for (Koppel v : verbodenKoppels) {
                 if (v.getNaam().equals(h1.getNaam())) {
                     r = false;
                     collision = true;

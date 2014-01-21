@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -91,14 +92,14 @@ public class GUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == produceerKoppels) {
-            
+
             Scramble.runGenerator();
             ArrayList<Koppel> koppel = Lijsten.getKoppels();
             System.out.println(Lijsten.getKoppels());
-           /* for(Koppel kop : koppel) {
-                koppel.getKandidaat1();
-            }*/
-                
+            /* for(Koppel kop : koppel) {
+             koppel.getKandidaat1();
+             }*/
+
             System.out.println(koppel.get(1).toString());
 
         }
@@ -106,6 +107,9 @@ public class GUI extends JFrame implements ActionListener {
         if (e.getSource() == selectFile) {
 
             JFileChooser fc = new JFileChooser();
+
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+            fc.setFileFilter(filter);
             int returnValue = fc.showOpenDialog(this);
 
             if (returnValue == JFileChooser.APPROVE_OPTION) {

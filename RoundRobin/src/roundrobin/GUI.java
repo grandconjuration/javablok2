@@ -53,7 +53,7 @@ public class GUI extends JFrame implements ActionListener {
         selectFile.addActionListener(this);
         panel_1.add(selectFile);
 
-        input = new JTextArea(15, 10);
+        input = new JTextArea(15, 30);
         panel_2.add(input);
 
         scrollPane = new JScrollPane(input, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -69,7 +69,7 @@ public class GUI extends JFrame implements ActionListener {
         checkKoppels = new JButton("Check koppels");
         panel_4.add(checkKoppels);
 
-        output = new JTextArea(15, 10);
+        output = new JTextArea(15, 30);
         panel_5.add(output);
         scrollPane2 = new JScrollPane(output, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panel_5.add(scrollPane2);
@@ -145,8 +145,17 @@ public class GUI extends JFrame implements ActionListener {
                         fr = new FileReader(file);
                         br = new BufferedReader(fr);
                         
+                        StringBuilder sb = new StringBuilder();
+                        String line = br.readLine();
                         
-                        System.out.println(br.readLine());
+                        while(line != null) {
+                            sb.append(line);
+                            sb.append("\n");
+                            line = br.readLine();
+                        }
+                        
+                        input.setText(sb.toString());
+              //          System.out.println(numOfLines);
 
                         br.close();
                     } catch (IOException ex) {

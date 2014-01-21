@@ -26,4 +26,8 @@ public class Disk {
     public int getPercentUsed() {
         return percentUsed;
     }
+    
+    public String toString() {
+        return naam + " " + percentUsed;
+    }
 }

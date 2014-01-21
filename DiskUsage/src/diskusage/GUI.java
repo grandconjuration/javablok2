@@ -44,6 +44,8 @@ public class GUI extends JFrame implements ActionListener {
     ArrayList<JPanel> newPanels = new ArrayList<JPanel>();
     ArrayList<JLabel> newLabels = new ArrayList<JLabel>();
     ArrayList<JProgressBar> newBars = new ArrayList<JProgressBar>();
+    ArrayList<Dimension> newDimensions = new ArrayList<Dimension>();
+    private boolean processed = false;
 
     public GUI() {
 
@@ -95,39 +97,38 @@ public class GUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == process) {
+            if (!processed) {
+                boolean isParsed = Parser.parseOutput(input.getText());
+                ArrayList<Disk> disks = Parser.getDisks();
 
-            boolean isParsed = Parser.parseOutput(defaultExample);
-            ArrayList<Disk> disks = Parser.getDisks();
+                if (isParsed) {
+                    System.out.println("parsed");
 
-            System.out.println(disks.toString());
-            if (isParsed) {
+                    int i = 0;
+                    while (disks.size() > i) {
+                        newPanels.add(new JPanel(new FlowLayout()));
+                        newLabels.add(new JLabel(disks.get(i).getNaam()));
+                        newBars.add(new JProgressBar(0, 100));
 
-                int times = 5;
+                        newPanels.get(i).add(newLabels.get(i));
+                        newBars.get(i).setValue(disks.get(i).getPercentUsed());
+                        newBars.get(i).setStringPainted(true);
+                        Dimension prefSize = newBars.get(i).getPreferredSize();
+                        prefSize.width = 400;
+                        newBars.get(i).setPreferredSize(prefSize);
+                        newPanels.get(i).add(newBars.get(i));
 
-                for (int i = 0; i < times; i++) {
+                        GridBagConstraints d = new GridBagConstraints();
+                        d.gridwidth = GridBagConstraints.REMAINDER;
+                        output_panel.add(newPanels.get(i), d);
+                        i++;
 
-                    newPanels.add(new JPanel(new FlowLayout()));
-                    newLabels.add(new JLabel("" + i + ""));
-                    newBars.add(new JProgressBar(0, 100));
-
-                    newPanels.get(i).add(newLabels.get(i));
-                    newBars.get(i).setValue(50);
-                    newBars.get(i).setStringPainted(true);
-                    //           Dimension prefSize = newBars.get(i).getPreferredSize();
-                    //         prefSize.width = 400;
-                    //            newBars.get(i).setPreferredSize(prefSize);
-                    newPanels.get(i).add(newBars.get(i));
-
-                    GridBagConstraints d = new GridBagConstraints();
-                    d.gridwidth = GridBagConstraints.REMAINDER;
-                    output_panel.add(newPanels.get(i), d);
-                    output_panel.validate();
-
+                    }
                 }
+                controlPanel.validate();
+                controlPanel.repaint();
+                processed = true;
             }
-            controlPanel.validate();
-            controlPanel.repaint();
-
         }
 
         if (e.getSource() == loadExample) {

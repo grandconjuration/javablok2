@@ -37,14 +37,14 @@ public class GUI extends JFrame implements ActionListener {
 
     private JPanel controlPanel, panel_1, panel_2, output_panel;
     private JTextArea input;
-    private JButton process, loadExample;
+    private JButton process, loadExample, clearBars;
     private JScrollPane scrollPane;
     private GridBagConstraints c;
     private String defaultExample;
-    ArrayList<JPanel> newPanels = new ArrayList<JPanel>();
-    ArrayList<JLabel> newLabels = new ArrayList<JLabel>();
-    ArrayList<JProgressBar> newBars = new ArrayList<JProgressBar>();
-    ArrayList<Dimension> newDimensions = new ArrayList<Dimension>();
+    ArrayList<JPanel> newPanels = new ArrayList<>();
+    ArrayList<JLabel> newLabels = new ArrayList<>();
+    ArrayList<JProgressBar> newBars = new ArrayList<>();
+    ArrayList<Disk> disks = new ArrayList<>();
     private boolean processed = false;
 
     public GUI() {
@@ -73,6 +73,11 @@ public class GUI extends JFrame implements ActionListener {
         panel_2.add(process);
         process.addActionListener(this);
 
+        clearBars = new JButton("Clear");
+        clearBars.addActionListener(this);
+        
+        newArrayLists();
+
         defaultExample = "Filesystem 1K-blocks Used Available Use% Mounted on\n"
                 + "/dev/sda6 29640780 4320704 23814388 16% /\n"
                 + "udev 1536756 4 1536752 1% /dev\n"
@@ -93,17 +98,37 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
+    private void newArrayLists() {
+
+        newPanels = new ArrayList<>();
+        newLabels = new ArrayList<>();
+        newBars = new ArrayList<>();
+        disks = new ArrayList<>();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == clearBars) {
+
+            output_panel.removeAll(); 
+            output_panel.revalidate();
+            output_panel.repaint();
+            processed = false;
+            newArrayLists();
+            System.out.println(disks);
+
+        }
 
         if (e.getSource() == process) {
             if (!processed) {
                 boolean isParsed = Parser.parseOutput(input.getText());
-                ArrayList<Disk> disks = Parser.getDisks();
+                disks = Parser.getDisks();
 
                 if (isParsed) {
-                    System.out.println("parsed");
-
+                    GridBagConstraints a = new GridBagConstraints();
+                    a.gridwidth = GridBagConstraints.REMAINDER;
+                    output_panel.add(clearBars, a);
                     int i = 0;
                     while (disks.size() > i) {
                         newPanels.add(new JPanel(new FlowLayout()));

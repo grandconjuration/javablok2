@@ -64,12 +64,12 @@ public class Parser {
                 disks.add(disk);
             }
             br.close();
+            return true;
         } catch (IOException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-
+            return false;
         }
-        return false;
     }
     
     public static ArrayList<Disk> getDisks() {

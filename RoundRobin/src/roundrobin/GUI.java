@@ -28,7 +28,8 @@ public class GUI extends JFrame implements ActionListener {
     private JTextArea input, output;
     private JScrollPane scrollPane, scrollPane2;
     private JButton leesIn, produceerKoppels, copy, checkKoppels, selectFile;
-    private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5, panel_6;
+    private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5, panel_6, panel_7;
+    private JLabel checkKoppelsLabel;
 
     public GUI() {
 
@@ -44,6 +45,7 @@ public class GUI extends JFrame implements ActionListener {
         panel_4 = new JPanel(new FlowLayout());
         panel_5 = new JPanel(new FlowLayout());
         panel_6 = new JPanel(new FlowLayout());
+        panel_7 = new JPanel(new FlowLayout());
 
         selectFile = new JButton("Blader naar tekstbestand");
         selectFile.addActionListener(this);
@@ -65,21 +67,27 @@ public class GUI extends JFrame implements ActionListener {
 
         checkKoppels = new JButton("Check koppels");
         panel_4.add(checkKoppels);
+        checkKoppels.addActionListener(this);
+        
+        checkKoppelsLabel = new JLabel("");
+        panel_5.add(checkKoppelsLabel);
 
         output = new JTextArea(15, 30);
-        panel_5.add(output);
+        panel_6.add(output);
         scrollPane2 = new JScrollPane(output, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panel_5.add(scrollPane2);
+        panel_6.add(scrollPane2);
 
         copy = new JButton("Kopieer output");
         copy.addActionListener(this);
-        panel_6.add(copy);
+        panel_7.add(copy);
 
         controlPanel.add(panel_1, c);
         controlPanel.add(panel_2, c);
         controlPanel.add(panel_3, c);
         controlPanel.add(panel_4, c);
         controlPanel.add(panel_5, c);
+        controlPanel.add(panel_6, c);
+        controlPanel.add(panel_7, c);
 
         setSize(550, 850);
         setTitle("Round Robin");
@@ -90,6 +98,13 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        
+        if(e.getSource() == checkKoppels) {
+            System.out.println("test");
+            boolean bool = Scramble.checkKoppels();
+            checkKoppelsLabel.setText("checkKoppels() returns: " + bool);
+            
+        }
 
         if (e.getSource() == produceerKoppels) {
 

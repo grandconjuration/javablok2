@@ -59,8 +59,8 @@ public class Scramble {
                 r = false;
             }
             
-            Koppel h1 = new Koppel(c.getKandidaat1().getNaam() + "-" + c.getKandidaat2().getNaam(), c.getKandidaat1(), c.getKandidaat2());
-            Koppel h2 = new Koppel(c.getKandidaat2().getNaam() + "-" + c.getKandidaat1().getNaam(), c.getKandidaat2(), c.getKandidaat1());
+            Koppel h1 = new Koppel(c.getKandidaat1().getNaam() + " - " + c.getKandidaat2().getNaam(), c.getKandidaat1(), c.getKandidaat2());
+            Koppel h2 = new Koppel(c.getKandidaat2().getNaam() + " - " + c.getKandidaat1().getNaam(), c.getKandidaat2(), c.getKandidaat1());
             
             for (Koppel v : verbodenKoppels) {
                 if (v.getNaam().equals(h1.getNaam())) {

@@ -6,12 +6,20 @@
 
 package diskusage;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author jelle
  */
 public class Parser {
-    static void parseOutput(String output) {
-        
+    private static ArrayList<Disk> disks = new ArrayList<Disk>();
+    
+    public static boolean parseOutput(String output) {
+        return false;
+    }
+    
+    public static ArrayList<Disk> getDisks() {
+        return disks;
     }
 }

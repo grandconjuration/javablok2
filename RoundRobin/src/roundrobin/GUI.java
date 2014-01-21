@@ -93,6 +93,7 @@ public class GUI extends JFrame implements ActionListener {
 
         if (e.getSource() == produceerKoppels) {
 
+            Lijsten.resetKoppels();
             Scramble.runGenerator();
             ArrayList<Koppel> koppel = Lijsten.getKoppels();
             System.out.println(Lijsten.getKoppels());

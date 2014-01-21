@@ -35,6 +35,8 @@ public class Scramble {
                         if(Lijsten.kanKoppelGebruiken(c, k)) {
                             if(Lijsten.voegKoppelToe(c, k)) {
                                 todo--;
+                                todo--;
+                                done++;
                                 done++;
                                 finished = true;
                             }

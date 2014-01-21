@@ -16,6 +16,7 @@ public class Lijsten {
     private static ArrayList<Kandidaat> kandidaten = new ArrayList<Kandidaat>();
     private static ArrayList<Koppel> koppels = new ArrayList<Koppel>();
     private static ArrayList<Koppel> verbodenKoppels = new ArrayList<Koppel>();
+    private static ArrayList<Kandidaat> gebruikteKandidaten = new ArrayList<Kandidaat>();
     
     public static boolean heeftKoppel(String em) {
         boolean r = false;
@@ -66,8 +67,12 @@ public class Lijsten {
             Koppel koppel1 = new Koppel(k1.getNaam() + "-" + k2.getNaam(), k1, k2);
             Koppel koppel2 = new Koppel(k2.getNaam() + "-" + k1.getNaam(), k2, k1);
             
+            koppels.add(koppel1);
+            
             verbodenKoppels.add(koppel1);
             verbodenKoppels.add(koppel2);
+            gebruikteKandidaten.add(k1);
+            gebruikteKandidaten.add(k2);
             return true;
         }else{
             return false;
@@ -110,5 +115,6 @@ public class Lijsten {
     
     public static void resetKoppels() {
         koppels = new ArrayList<Koppel>();
+        gebruikteKandidaten = new ArrayList<Kandidaat>();
     }
 }

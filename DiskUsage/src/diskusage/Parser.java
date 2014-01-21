@@ -62,8 +62,10 @@ public class Parser {
                 }
                 sc.close(); 
                 
-                Disk disk = new Disk(naam, percentUsed);
-                disks.add(disk);
+                if(doLine) {
+                    Disk disk = new Disk(naam, percentUsed);
+                    disks.add(disk);
+                }
             }
             br.close();
             return true;

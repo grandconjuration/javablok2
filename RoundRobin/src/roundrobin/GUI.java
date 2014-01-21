@@ -95,13 +95,21 @@ public class GUI extends JFrame implements ActionListener {
 
             Lijsten.resetKoppels();
             Scramble.runGenerator();
-            ArrayList<Koppel> koppel = Lijsten.getKoppels();
-            System.out.println(Lijsten.getKoppels());
-            /* for(Koppel kop : koppel) {
-             koppel.getKandidaat1();
-             }*/
+            ArrayList<Koppel> koppels = Lijsten.getKoppels();
+//            System.out.println(Lijsten.getKoppels());
+            
+            StringBuilder sb = new StringBuilder();
+            
+            int i = 0;
+            while(koppels.size() > i)
+            {
+                sb.append(koppels.get(i).toString());
+                i++;
+            }
+            
+            output.setText(sb.toString());
 
-            System.out.println(koppel.get(1).toString());
+      //      System.out.println(koppels.get(1).toString());
 
         }
 

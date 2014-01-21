@@ -79,4 +79,8 @@ public class Parser {
     public static ArrayList<Disk> getDisks() {
         return disks;
     }
+    
+    public static void resetDisks() {
+        disks = new ArrayList<Disk>();
+    }
 }

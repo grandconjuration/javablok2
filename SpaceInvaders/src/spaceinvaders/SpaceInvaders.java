@@ -1,22 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package spaceinvaders;
 
-/**
- *
- * @author jelle
- */
-public class SpaceInvaders {
+import java.awt.Canvas;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+
+public class SpaceInvaders extends Canvas {
+    
+    public SpaceInvaders() {
+        
+        JFrame frame = new JFrame("SpaceInvaders");
+        JPanel panel = (JPanel) frame.getContentPane();
+        panel.setPreferredSize(new Dimension(800, 600));
+        panel.setLayout(null);
+        
+        setBounds(0, 0, 800, 600);
+        panel.add(this);
+        setIgnoreRepaint(true);
+        
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
+        
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+         SpaceInvaders spaceinvaders = new SpaceInvaders();
     }
     
 }

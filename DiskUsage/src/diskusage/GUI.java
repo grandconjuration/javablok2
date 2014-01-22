@@ -74,7 +74,7 @@ public class GUI extends JFrame implements ActionListener {
 
         clearBars = new JButton("Clear");
         clearBars.addActionListener(this);
-        
+
         newArrayLists();
 
         defaultExample = "Filesystem 1K-blocks Used Available Use% Mounted on\n"
@@ -87,7 +87,6 @@ public class GUI extends JFrame implements ActionListener {
         controlPanel.add(panel_1, c);
         controlPanel.add(panel_2, c);
         controlPanel.add(output_panel, c);
-        //          controlPanel.add(panel_3, c);
 
         setSize(550, 900);
         setTitle("Disk Usage");
@@ -103,7 +102,7 @@ public class GUI extends JFrame implements ActionListener {
         newLabels = new ArrayList<>();
         newBars = new ArrayList<>();
         Parser.resetDisks();
-        
+
     }
 
     @Override
@@ -111,13 +110,11 @@ public class GUI extends JFrame implements ActionListener {
 
         if (e.getSource() == clearBars) {
 
-            output_panel.removeAll(); 
+            output_panel.removeAll();
             output_panel.revalidate();
             output_panel.repaint();
             processed = false;
             newArrayLists();
-      //      controlPanel.revalidate();
-    //        controlPanel.repaint();
       
 
         }

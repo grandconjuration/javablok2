@@ -18,8 +18,8 @@ public class SpaceInvaders extends Canvas {
 
     private BufferStrategy strategy;
     private boolean gameRunning = true;
-    private ArrayList entities = new ArrayList();
-    private ArrayList removeList = new ArrayList();
+    private ArrayList<Entity> entities = new ArrayList();
+    private ArrayList<Entity> removeList = new ArrayList();
     private Entity ship;
     private double moveSpeed = 300;
     private long lastFire = 0;

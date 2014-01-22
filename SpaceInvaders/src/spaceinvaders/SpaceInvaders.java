@@ -25,6 +25,7 @@ public class SpaceInvaders extends Canvas {
     private long lastFire = 0;
     private long firingInterval = 500;
     private int aantalAliens;
+    private int score;
 
     private String message = "";
     private boolean waitingForKeyPress = true;
@@ -108,6 +109,7 @@ public class SpaceInvaders extends Canvas {
 
     public void notifyAlienKilled() {
         aantalAliens--;
+        score = score + 10;
 
         if (aantalAliens == 0) {
             notifyWin();
@@ -143,6 +145,10 @@ public class SpaceInvaders extends Canvas {
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
             g.setColor(Color.black);
             g.fillRect(0, 0, 800, 600);
+            
+               g.setColor(Color.white);
+                 g.drawString("Score: " + score, 50, 25);
+            
 
             if (!waitingForKeyPress) {
                 for (int i = 0; i < entities.size(); i++) {

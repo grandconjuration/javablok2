@@ -135,14 +135,17 @@ public class GUI extends JFrame implements ActionListener {
                     while (disks.size() > i) {
                         newPanels.add(new JPanel(new FlowLayout()));
                         newLabels.add(new JLabel(disks.get(i).getNaam()));
+                        Dimension prefSizeLabels = newLabels.get(i).getPreferredSize();
+                        prefSizeLabels.width = 100;
+                        newLabels.get(i).setPreferredSize(prefSizeLabels);
                         newBars.add(new JProgressBar(0, 100));
 
                         newPanels.get(i).add(newLabels.get(i));
                         newBars.get(i).setValue(disks.get(i).getPercentUsed());
                         newBars.get(i).setStringPainted(true);
-                        Dimension prefSize = newBars.get(i).getPreferredSize();
-                        prefSize.width = 400;
-                        newBars.get(i).setPreferredSize(prefSize);
+                        Dimension prefSizeBars = newBars.get(i).getPreferredSize();
+                        prefSizeBars.width = 400;
+                        newBars.get(i).setPreferredSize(prefSizeBars);
                         newPanels.get(i).add(newBars.get(i));
 
                         GridBagConstraints d = new GridBagConstraints();

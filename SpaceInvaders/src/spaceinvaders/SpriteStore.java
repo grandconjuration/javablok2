@@ -19,6 +19,7 @@ public class SpriteStore {
 	}
 	
 	private HashMap sprites = new HashMap();
+        
 	
 	public Sprite getSprite(String ref) {
 		if (sprites.get(ref) != null) {

@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -20,11 +21,14 @@ public class SpaceInvaders extends Canvas {
     private boolean gameRunning = true;
     private ArrayList<Entity> entities = new ArrayList();
     private ArrayList<Entity> removeList = new ArrayList();
+    private int[][] enemyTable;
+    //   private
+//    private Array
     private Entity ship;
     private double moveSpeed = 300;
     private long lastFire = 0;
     private long firingInterval = 500;
-    private int aantalAliens;
+    private int aantalEnemies;
     private int score;
 
     private String message = "";
@@ -79,12 +83,15 @@ public class SpaceInvaders extends Canvas {
         ship = new ShipEntity(this, "sprites/ship.gif", 370, 550);
         entities.add(ship);
 
-        aantalAliens = 0;
+        aantalEnemies = 0;
+        enemyTable = new int[5][12];
+
         for (int row = 0; row < 5; row++) {
             for (int x = 0; x < 12; x++) {
-                Entity alien = new AlienEntity(this, "sprites/alien.gif", 100 + (x * 50), (50) + row * 30);
+
+                Entity alien = new AlienEntity(this, "sprites/alien.gif", 100 + (x * 50), (50) + row * 30, row, x);
                 entities.add(alien);
-                aantalAliens++;
+                aantalEnemies++;
             }
         }
     }
@@ -95,6 +102,11 @@ public class SpaceInvaders extends Canvas {
 
     public void removeEntity(Entity entity) {
         removeList.add(entity);
+
+        if (entity instanceof EnemyEntity) {
+            
+    //        int oldColumnLength = enemyTable[(entity.getColumn()].length; 
+        }
     }
 
     public void notifyDeath() {
@@ -107,32 +119,25 @@ public class SpaceInvaders extends Canvas {
         waitingForKeyPress = true;
     }
 
-    public void notifyAlienKilled() {
-        aantalAliens--;
+    public void notifyEnemyKilled() {
+        aantalEnemies--;
         score = score + 10;
 
-        if (aantalAliens == 0) {
+        if (aantalEnemies == 0) {
             notifyWin();
         }
 
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = (Entity) entities.get(i);
 
-            if (entity instanceof AlienEntity) {
+            if (entity instanceof EnemyEntity) {
 
                 entity.setHorizontalMovement(entity.getHorizontalMovement() * 1.02);
             }
         }
-    }
-public void AlientryToFire() {
-        if (System.currentTimeMillis() - lastFire < firingInterval) {
-            return;
-        }
 
-        lastFire = System.currentTimeMillis();
-        AlienShotEntity shot = new AlienShotEntity(this, "sprites/shot.gif", ship.getX() + 10, ship.getY() - 30);
-        entities.add(shot);
     }
+
     public void tryToFire() {
         if (System.currentTimeMillis() - lastFire < firingInterval) {
             return;
@@ -153,10 +158,9 @@ public void AlientryToFire() {
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
             g.setColor(Color.black);
             g.fillRect(0, 0, 800, 600);
-            
-               g.setColor(Color.white);
-                 g.drawString("Score: " + score, 50, 25);
-            
+
+            g.setColor(Color.white);
+            g.drawString("Score: " + score, 50, 25);
 
             if (!waitingForKeyPress) {
                 for (int i = 0; i < entities.size(); i++) {
@@ -165,18 +169,15 @@ public void AlientryToFire() {
                     entity.move(delta);
                 }
             }
-            
-            
-            // moves entities
 
+            // moves entities
             for (int i = 0; i < entities.size(); i++) {
                 Entity entity = (Entity) entities.get(i);
 
                 entity.draw(g);
             }
-            
-            //collissions
 
+            //collissions
             for (int p = 0; p < entities.size(); p++) {
                 for (int s = p + 1; s < entities.size(); s++) {
                     Entity me = (Entity) entities.get(p);
@@ -189,6 +190,9 @@ public void AlientryToFire() {
                 }
             }
 
+            //recalc table
+            
+            //remove
             entities.removeAll(removeList);
             removeList.clear();
 
@@ -214,6 +218,8 @@ public void AlientryToFire() {
 
             if ((leftPressed) && (!rightPressed)) {
                 ship.setHorizontalMovement(-moveSpeed);
+                 AlienShotEntity shot = new AlienShotEntity(this, "sprites/shot.gif", 100, 100);
+        entities.add(shot);
             } else if ((rightPressed) && (!leftPressed)) {
                 ship.setHorizontalMovement(moveSpeed);
             }

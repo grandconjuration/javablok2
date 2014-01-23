@@ -9,10 +9,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 
 public class SpaceInvaders extends Canvas {
 
@@ -33,7 +42,9 @@ public class SpaceInvaders extends Canvas {
     private boolean rightPressed = false;
     private boolean firePressed = false;
     private boolean logicRequiredThisLoop = false;
-
+    
+    private Clip clip;
+    
     public SpaceInvaders() {
         JFrame container = new JFrame("Space Invaders ");
 
@@ -282,9 +293,32 @@ public void AlientryToFire() {
         }
     }
 
+    public void playTheme() {
+        try {
+            stopPlay();
+            AudioInputStream inputStream = AudioSystem
+                    .getAudioInputStream(getClass().getResourceAsStream("/audio/theme.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(inputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+        } catch (Exception e) {
+            stopPlay();
+            System.err.println(e.getMessage());
+        }
+    }
+    
+    private void stopPlay() {
+        if (clip != null) {
+            clip.stop();
+            clip.close();
+            clip = null;
+        }
+    }
+    
     public static void main(String argv[]) {
         SpaceInvaders g = new SpaceInvaders();
-
+        g.playTheme();
         g.gameLoop();
     }
 }

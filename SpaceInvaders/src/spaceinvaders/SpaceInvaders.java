@@ -124,7 +124,15 @@ public class SpaceInvaders extends Canvas {
             }
         }
     }
+public void AlientryToFire() {
+        if (System.currentTimeMillis() - lastFire < firingInterval) {
+            return;
+        }
 
+        lastFire = System.currentTimeMillis();
+        AlienShotEntity shot = new AlienShotEntity(this, "sprites/shot.gif", ship.getX() + 10, ship.getY() - 30);
+        entities.add(shot);
+    }
     public void tryToFire() {
         if (System.currentTimeMillis() - lastFire < firingInterval) {
             return;
@@ -157,12 +165,17 @@ public class SpaceInvaders extends Canvas {
                     entity.move(delta);
                 }
             }
+            
+            
+            // moves entities
 
             for (int i = 0; i < entities.size(); i++) {
                 Entity entity = (Entity) entities.get(i);
 
                 entity.draw(g);
             }
+            
+            //collissions
 
             for (int p = 0; p < entities.size(); p++) {
                 for (int s = p + 1; s < entities.size(); s++) {

@@ -27,12 +27,12 @@ public class ShotEntity extends Entity {
             return;
         }
 
-        if (other instanceof EnemyEntity) {
+        if (other instanceof AlienEntity) {
 
             game.removeEntity(this);
             game.removeEntity(other);
 
-            game.notifyEnemyKilled();
+            game.notifyAlienKilled();
             used = true;
         }
     }

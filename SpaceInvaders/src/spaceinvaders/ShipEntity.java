@@ -21,7 +21,7 @@ public class ShipEntity extends Entity {
 	}
 	
 	public void collidedWith(Entity other) {
-		if (other instanceof EnemyEntity || other instanceof AlienShotEntity) {
+		if (other instanceof AlienEntity) {
 			game.notifyDeath();
 		}
 	}

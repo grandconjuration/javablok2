@@ -28,8 +28,9 @@ public class GUI extends JFrame implements ActionListener {
     private JTextArea input, output;
     private JScrollPane scrollPane, scrollPane2;
     private JButton leesIn, produceerKoppels, copy, checkKoppels, selectFile;
-    private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5, panel_6, panel_7;
-    private JLabel checkKoppelsLabel;
+    private JPanel controlPanel, panel_1, panel_2, panel_3, panel_4, panel_5, panel_6, panel_7, panel_8;
+    private JLabel checkKoppelsLabel, personCountLabel, coupleCountLabel;
+    private int personCount = 0, coupleCount = 0;
 
     public GUI() {
 
@@ -46,6 +47,7 @@ public class GUI extends JFrame implements ActionListener {
         panel_5 = new JPanel(new FlowLayout());
         panel_6 = new JPanel(new FlowLayout());
         panel_7 = new JPanel(new FlowLayout());
+        panel_8 = new JPanel(new FlowLayout());
 
         selectFile = new JButton("Blader naar tekstbestand");
         selectFile.addActionListener(this);
@@ -71,6 +73,12 @@ public class GUI extends JFrame implements ActionListener {
         
         checkKoppelsLabel = new JLabel("checkKoppels() returns: void");
         panel_5.add(checkKoppelsLabel);
+        
+        personCountLabel = new JLabel("Nog niemand ingeladen;");
+        panel_8.add(personCountLabel);
+        
+        coupleCountLabel = new JLabel("Nog geen groepen gegenereerd");
+        panel_8.add(coupleCountLabel);
 
         output = new JTextArea(15, 30);
         panel_6.add(output);
@@ -86,6 +94,7 @@ public class GUI extends JFrame implements ActionListener {
         controlPanel.add(panel_3, c);
         controlPanel.add(panel_4, c);
         controlPanel.add(panel_5, c);
+        controlPanel.add(panel_8, c);
         controlPanel.add(panel_6, c);
         controlPanel.add(panel_7, c);
 
@@ -111,16 +120,19 @@ public class GUI extends JFrame implements ActionListener {
             Scramble.runGenerator();
             ArrayList<Koppel> koppels = Lijsten.getKoppels();
 //            System.out.println(Lijsten.getKoppels());
-            
+            coupleCount++;
             StringBuilder sb = new StringBuilder();
-            
+            sb.append("Groep nummer: " + coupleCount + "\n");
             int i = 0;
             while(koppels.size() > i)
             {
-                sb.append(koppels.get(i).toString());
+                int koppelNummer = i + 1;
+                sb.append("Koppel nummer " + koppelNummer + ": " + koppels.get(i).toString());
                 i++;
             }
             
+            
+            coupleCountLabel.setText("Groep nummer: " + coupleCount);
             output.setText(sb.toString());
 
       //      System.out.println(koppels.get(1).toString());
@@ -181,7 +193,8 @@ public class GUI extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == leesIn) {
-
+            personCount = 0;
+            coupleCount = 0;
             BufferedReader br = new BufferedReader(new StringReader(input.getText()));
 
             try {
@@ -195,9 +208,11 @@ public class GUI extends JFrame implements ActionListener {
                     //   System.out.println(line);
                     Kandidaat kandidaat = new Kandidaat(line);
                     Lijsten.voegKandidaatToe(kandidaat);
+                    personCount++;
 
                 }
                 br.close();
+                personCountLabel.setText(Integer.toString(personCount) + " personen ingeladen;");
             } catch (IOException ex) {
                 Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println(ex.getMessage());
